@@ -20,21 +20,90 @@ Follow these steps to publish the site with GitHub Pages. Everything runs in the
 > **Need to update wording or images?** Edit the files directly in the GitHub web editor and commit — the workflow redeploys automatically.
 
 ### 🚧 If GitHub says "Resolve conflicts"
-Sometimes GitHub Pages keeps running while you tweak text or images in the web editor. If you see a merge conflict warning for `vite.config.js`, click **Resolve conflicts** and replace everything in that file with the snippet below, then press **Mark as resolved**. This keeps the production build loading correctly on GitHub Pages.
+Sometimes GitHub Pages keeps running while you tweak text or images in the web editor. If you open a pull request and see the red **Resolve conflicts** button, remove every line that starts with `<<<<<<<`, `=======`, or `>>>>>>>` and paste in the final version of each file listed below. When you are done, press **Mark as resolved** and then **Commit merge**.
 
-```js
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+**Files you might need to fix**
 
-export default defineConfig(({ command }) => {
-  const isProdBuild = command === 'build';
+1. `.github/workflows/deploy.yml`
+   - Use the editor’s **Copy from branch** dropdown to select the `work` branch (or copy the snippet below) so the workflow always installs the dev dependencies before building.
 
-  return {
-    base: isProdBuild ? './' : '/',
-    plugins: [react()],
-  };
-});
-```
+   ```yaml
+   name: Deploy RSVP site to GitHub Pages
+
+   on:
+     push:
+       branches: ["main"]
+     workflow_dispatch:
+
+   permissions:
+     contents: read
+     pages: write
+     id-token: write
+
+   concurrency:
+     group: "pages"
+     cancel-in-progress: false
+
+   jobs:
+     build:
+       runs-on: ubuntu-latest
+       env:
+         NODE_ENV: development
+       steps:
+         - name: Checkout repository
+           uses: actions/checkout@v4
+
+         - name: Setup Node.js
+           uses: actions/setup-node@v4
+           with:
+             node-version: 20
+             cache: "npm"
+
+         - name: Install dependencies
+           run: npm install
+
+         - name: Build project
+           run: npm run build
+
+         - name: Upload production-ready files
+           uses: actions/upload-pages-artifact@v3
+           with:
+             path: dist
+
+     deploy:
+       needs: build
+       runs-on: ubuntu-latest
+       environment:
+         name: github-pages
+         url: ${{ steps.deployment.outputs.page_url }}
+       steps:
+         - name: Deploy to GitHub Pages
+           id: deployment
+           uses: actions/deploy-pages@v4
+   ```
+
+2. `vite.config.js`
+   - Paste the snippet directly into the conflict editor:
+
+   ```js
+   import { defineConfig } from 'vite';
+   import react from '@vitejs/plugin-react';
+
+   export default defineConfig(({ command }) => {
+     const isProdBuild = command === 'build';
+
+     return {
+       // GitHub Pages serves the app from a project subdirectory, so the
+       // production bundle needs relative asset URLs. Local development can
+       // continue using the default root base path.
+       base: isProdBuild ? './' : '/',
+       plugins: [react()],
+     };
+   });
+   ```
+
+3. `README.md`
+   - If the README itself shows conflict markers, open this repository’s `README.md`, copy all of it, and paste over the conflicted version in GitHub. Conflicts usually happen after editing text directly in the web UI; replacing the file with the latest copy removes the markers immediately.
 
 ## ✉️ Hooking up Zapier (optional)
 The RSVP form can POST each submission to a Zapier webhook. Replace the placeholder value in [`src/App.jsx`](src/App.jsx) on line that defines `ZAPIER_WEBHOOK_URL` with your real Zapier URL.
