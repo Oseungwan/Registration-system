@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background: radial-gradient(circle at 20% 20%, rgba(224, 156, 95, 0.2), transparent 50%),
+    radial-gradient(circle at 80% 10%, rgba(181, 107, 70, 0.15), transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(34, 64, 89, 0.4), transparent 60%),
+    linear-gradient(135deg, #050910 0%, #0b1722 40%, #1a2c3a 100%);
+  min-height: 100vh;
+  color: #f8f5f0;
+  overflow-x: hidden;
+}
+
+.glass-panel {
+  backdrop-filter: blur(18px) saturate(160%);
+  background: linear-gradient(135deg, rgba(13, 25, 35, 0.72), rgba(30, 54, 68, 0.66));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 20px 60px rgba(10, 12, 20, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.glass-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.liquid-orb {
+  background: conic-gradient(from 90deg at 50% 50%, rgba(255, 164, 88, 0.8), rgba(255, 213, 153, 0.5), rgba(100, 179, 198, 0.45), rgba(255, 164, 88, 0.8));
+  filter: blur(0px);
+  opacity: 0.85;
+}
+
+@keyframes swirl {
+  0% {
+    transform: translate(-5%, -5%) scale(1);
+  }
+  50% {
+    transform: translate(5%, 6%) scale(1.05);
+  }
+  100% {
+    transform: translate(-5%, -5%) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-30%) skewX(-8deg);
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateX(130%) skewX(-8deg);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.02);
+  }
+}
+
+.hero-shimmer::before {
+  content: '';
+  position: absolute;
+  inset: -20% -40%;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+  filter: blur(20px);
+  animation: shimmer 8s linear infinite;
+}
+
+.animate-liquid {
+  animation: swirl 14s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 10s ease-in-out infinite;
+}
+
+.ship-silhouette {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 160px;
+  background: url("data:image/svg+xml,%3Csvg width='1440' height='200' viewBox='0 0 1440 200' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 170L120 150L240 140L360 150L480 130L600 120L720 150L840 110L960 130L1080 100L1200 120L1320 90L1440 110V200H0V170Z' fill='rgba(8,16,26,0.7)'/%3E%3Cpath d='M200 150H1240C1260 150 1280 130 1290 120L1330 80L1440 70V200H0L90 170C120 160 160 150 200 150Z' fill='rgba(19,38,53,0.65)'/%3E%3C/svg%3E") bottom center/cover no-repeat;
+  filter: drop-shadow(0 -6px 12px rgba(0, 0, 0, 0.35));
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.backdrop-veil {
+  position: absolute;
+  inset: -10% -20%;
+  background: radial-gradient(circle at 30% 20%, rgba(224, 156, 95, 0.35), transparent 55%),
+    radial-gradient(circle at 70% 10%, rgba(181, 107, 70, 0.32), transparent 45%),
+    radial-gradient(circle at 50% 60%, rgba(63, 93, 110, 0.45), transparent 65%);
+  filter: blur(60px);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.language-toggle button {
+  transition: all 0.3s ease;
+}
+
+.language-toggle button[aria-pressed='true'] {
+  color: #f6cfa7;
+  text-shadow: 0 0 12px rgba(224, 156, 95, 0.8);
+}
+
+.glow-ring {
+  position: absolute;
+  inset: -30px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 203, 144, 0.35);
+  opacity: 0.6;
+  filter: blur(1px);
+}
+
+.form-input {
+  @apply w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white placeholder-white/50 shadow-inner focus:border-amberglass focus:outline-none focus:ring-2 focus:ring-amberglass/60 transition;
+}
+
+.form-label {
+  @apply text-sm uppercase tracking-[0.3em] text-amber-100/90 font-medium;
+}
+
+.confirm-overlay {
+  backdrop-filter: blur(24px) saturate(180%);
+  background: radial-gradient(circle at center, rgba(27, 45, 58, 0.85), rgba(9, 16, 26, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.shadow-glow {
+  box-shadow: 0 0 18px rgba(224, 156, 95, 0.8), 0 0 6px rgba(255, 208, 150, 0.6);
+}
