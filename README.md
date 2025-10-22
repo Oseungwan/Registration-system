@@ -1,4 +1,3 @@
-# Registration-system
 # KLN Seaport New Year Party RSVP App
 
 This project delivers the bilingual (English / Thai) RSVP site for the **KLN Seaport New Year Party 2026**. It is built with React, Tailwind CSS, Vite, and Framer Motion, and includes a confirmation overlay plus a Make.com webhook hook for logging submissions.
@@ -43,7 +42,7 @@ Sometimes GitHub Pages keeps running while you tweak text or images in the web e
 
    concurrency:
      group: "pages"
-     cancel-in-progress: false
+     cancel-in-progress: true
 
    jobs:
      build:
@@ -57,11 +56,11 @@ Sometimes GitHub Pages keeps running while you tweak text or images in the web e
          - name: Setup Node.js
            uses: actions/setup-node@v4
            with:
-             node-version: 20
-             cache: "npm"
+             node-version: '20'
+             cache: 'npm'
 
          - name: Install dependencies
-           run: npm install
+           run: npm ci
 
          - name: Build project
            run: npm run build
