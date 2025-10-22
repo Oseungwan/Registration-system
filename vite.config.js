@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+codex/create-bilingual-rsvp-page-for-kln-party-h46k7u
 export default defineConfig(({ command }) => {
   const isProdBuild = command === 'build';
 
@@ -13,4 +14,11 @@ export default defineConfig(({ command }) => {
       port: 5173,
     },
   };
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 5173,
+  },
+main
 });

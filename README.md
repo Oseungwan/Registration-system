@@ -19,26 +19,6 @@ Follow these steps to publish the site with GitHub Pages. Everything runs in the
 
 > **Need to update wording or images?** Edit the files directly in the GitHub web editor and commit — the workflow redeploys automatically.
 
-### 🚧 If GitHub says "Resolve conflicts"
-Sometimes GitHub Pages keeps running while you tweak text or images in the web editor. If you see a merge conflict warning for `vite.config.js`, click **Resolve conflicts** and replace everything in that file with the snippet below, then press **Mark as resolved**. This keeps the production build loading correctly on GitHub Pages.
-
-```js
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-
-export default defineConfig(({ command }) => {
-  const isProdBuild = command === 'build';
-
-  return {
-    base: isProdBuild ? './' : '/',
-    plugins: [react()],
-    server: {
-      port: 5173,
-    },
-  };
-});
-```
-
 ## ✉️ Hooking up Zapier (optional)
 The RSVP form can POST each submission to a Zapier webhook. Replace the placeholder value in [`src/App.jsx`](src/App.jsx) on line that defines `ZAPIER_WEBHOOK_URL` with your real Zapier URL.
 
