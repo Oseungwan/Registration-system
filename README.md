@@ -1,7 +1,7 @@
 # Registration-system
 # KLN Seaport New Year Party RSVP App
 
-This project delivers the bilingual (English / Thai) RSVP site for the **KLN Seaport New Year Party 2026**. It is built with React, Tailwind CSS, Vite, and Framer Motion, and includes a confirmation overlay and Zapier webhook hook for logging submissions.
+This project delivers the bilingual (English / Thai) RSVP site for the **KLN Seaport New Year Party 2026**. It is built with React, Tailwind CSS, Vite, and Framer Motion, and includes a confirmation overlay plus a Make.com webhook hook for logging submissions.
 
 ## 🤝 I just want it live (no coding needed)
 Follow these steps to publish the site with GitHub Pages. Everything runs in the cloud; you only need a GitHub account.
@@ -106,14 +106,15 @@ Sometimes GitHub Pages keeps running while you tweak text or images in the web e
 3. `README.md`
    - If the README itself shows conflict markers, open this repository’s `README.md`, copy all of it, and paste over the conflicted version in GitHub. Conflicts usually happen after editing text directly in the web UI; replacing the file with the latest copy removes the markers immediately.
 
-## ✉️ Hooking up Zapier (optional)
-The RSVP form can POST each submission to a Zapier webhook. Replace the placeholder value in [`src/App.jsx`](src/App.jsx) on line that defines `ZAPIER_WEBHOOK_URL` with your real Zapier URL.
+## ✉️ Hooking up Make.com (optional)
+The RSVP form posts each submission to a Make.com webhook. Update the constants near the top of [`src/App.jsx`](src/App.jsx) if you need to use a different Make scenario.
 
 ```js
-const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/YOUR-ZAPIER-ID';
+const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/x9aawrr3jj4tywycns525istq15g5vve';
+const MAKE_WEBHOOK_API_KEY = 'URAss7PB8MN-Bw5';
 ```
 
-Zapier will store every RSVP with the generated RSVP ID, dietary preference, and timestamps. If you leave the placeholder untouched, the app will skip the POST call so you can demo safely.
+The submit handler sends RSVP details (including the generated RSVP ID and dietary preference) to the webhook with a `Bearer` authorization header that carries the API key. Adjust or rotate the key in Make.com whenever you need to revoke access.
 
 ## 💻 Preview on your computer (optional)
 If you would like to run the site locally:
@@ -137,4 +138,4 @@ If you would like to run the site locally:
 - `tailwind.config.js` – Tailwind theme customisation
 - `.github/workflows/deploy.yml` – GitHub Pages automation workflow
 
-Feel free to reach out to your Zapier or web team if you need help customising copy or assets — no additional code tooling is required beyond the steps above.
+Feel free to reach out to your automation or web team if you need help customising copy or assets — no additional code tooling is required beyond the steps above.
