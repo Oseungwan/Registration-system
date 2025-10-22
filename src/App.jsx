@@ -152,17 +152,23 @@ export default function App() {
       language,
       rsvpId,
       submittedAt: new Date().toISOString(),
+      apiKey: MAKE_WEBHOOK_API_KEY,
     };
 
     try {
-      await fetch(MAKE_WEBHOOK_URL, {
+      const response = await fetch(MAKE_WEBHOOK_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${MAKE_WEBHOOK_API_KEY}`,
         },
         body: JSON.stringify(payload),
+        mode: 'cors',
+        keepalive: true,
       });
+
+      if (!response.ok) {
+        throw new Error(`Webhook responded with status ${response.status}`);
+      }
 
       setConfirmation({
         id: rsvpId,

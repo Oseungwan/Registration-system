@@ -113,7 +113,7 @@ const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/x9aawrr3jj4tywycns525istq15g
 const MAKE_WEBHOOK_API_KEY = 'URAss7PB8MN-Bw5';
 ```
 
-The submit handler sends RSVP details (including the generated RSVP ID and dietary preference) to the webhook with a `Bearer` authorization header that carries the API key. Adjust or rotate the key in Make.com whenever you need to revoke access.
+The submit handler posts RSVP details (including the generated RSVP ID, dietary preference, and language) to the webhook. The API key is included inside the JSON payload as `apiKey` so Make.com scenarios can validate the request without triggering browser CORS errors. Rotate the key inside Make.com whenever you need to revoke access and update the constant here to match.
 
 ## 💻 Preview on your computer (optional)
 If you would like to run the site locally:
