@@ -1,3 +1,4 @@
+# Registration-system
 # KLN Seaport New Year Party RSVP App
 
 This project delivers the bilingual (English / Thai) RSVP site for the **KLN Seaport New Year Party 2026**. It is built with React, Tailwind CSS, Vite, and Framer Motion, and includes a confirmation overlay plus a Make.com webhook hook for logging submissions.
