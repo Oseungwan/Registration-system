@@ -95,9 +95,8 @@ const INITIAL_FORM = {
   notes: '',
 };
 
-// Make.com webhook configuration for RSVP logging.
-const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/x9aawrr3jj4tywycns525istq15g5vve';
-const MAKE_WEBHOOK_API_KEY = 'URAss7PB8MN-Bw5';
+// Replace with your actual Zapier webhook endpoint to log RSVPs.
+const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/YOUR-ZAPIER-ID';
 
 function generateRsvpId(name = '') {
   const initials = name
@@ -155,14 +154,15 @@ export default function App() {
     };
 
     try {
-      await fetch(MAKE_WEBHOOK_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${MAKE_WEBHOOK_API_KEY}`,
-        },
-        body: JSON.stringify(payload),
-      });
+      if (ZAPIER_WEBHOOK_URL && !ZAPIER_WEBHOOK_URL.includes('YOUR-ZAPIER-ID')) {
+        await fetch(ZAPIER_WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+      }
 
       setConfirmation({
         id: rsvpId,
